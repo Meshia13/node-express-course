@@ -20,34 +20,53 @@ const getBody = (req, callback) => {
   });
 };
 
-// here, you could declare one or more variables to store what comes back from the form.
-let item = "Enter something below.";
 
-// here, you can change the form below to modify the input fields and what is displayed.
-// This is just ordinary html with string interpolation.
+// Generate a random number between 1 and 100
+let randomNum = Math.floor(Math.random() * 100) + 1;
+let message = "Guess a number between 1 and 100!";
+
 const form = () => {
   return `
-  <body>
-  <p>${item}</p>
-  <form method="POST">
-  <input name="item"></input>
-  <button type="submit">Submit</button>
-  </form>
-  </body>
-  `;
-};
+    <body>
+      <h2>Guessing Game</h2>
+      <p>${message}</p>
+      <form method="POST">
+        <input type="number" min="1" max="100" name="guessNum" required></input>
+        <button type="submit">Guess</button>
+      </form>
+    </body>`
+  ;
+}
 
 const server = http.createServer((req, res) => {
   console.log("req.method is ", req.method);
   console.log("req.url is ", req.url);
+
   if (req.method === "POST") {
     getBody(req, (body) => {
       console.log("The body of the post is ", body);
       // here, you can add your own logic
-      if (body["item"]) {
-        item = body["item"];
-      } else {
-        item = "Nothing was entered.";
+      if (body["guessNum"]) {
+
+        const guessNum = parseInt(body["guessNum"], 10);
+
+        if (isNaN(guessNum)){
+          message = "Oops! Please enter a valid number!"
+        }
+        else if (guessNum < randomNum) {
+          message = "Too low! Try again!"
+        }
+        else if (guessNum > randomNum) {
+          message = "Too high! Try again!"
+        }
+        else {
+          message = `CONGRATULATION!!! ${guessNum} is the correct number!!! A new number is now generated.`
+          randomNum = Math.floor(Math.random() * 100) + 1; // Reset game
+        }
+      
+      }
+      else {
+        message = "Please enter a number."
       }
       // Your code changes would end here
       res.writeHead(303, {
