@@ -23,7 +23,7 @@ writeFile(filePath, `Detective Charleston Chew stood over the crime scene.\n`)
     })
     .then(() => {
         // call readFile to read it back out
-        readFile(filePath, 'utf-8')
+        return readFile(filePath, 'utf-8')
     })
     .then((data) => {
         // log the data to the screen

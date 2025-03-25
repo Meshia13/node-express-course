@@ -39,8 +39,8 @@ const reader = async() => {
 // write a third async function called readWrite. In that function, you call await reader and await writer. 
 
 const readWrite = async() => {
-    await reader();
     await writer();
+    await reader();    
 }
 
 // Finally, write a line at the bottom of the file that calls the readWrite function. 
