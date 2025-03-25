@@ -1,4 +1,4 @@
 /node_modules
 /content/big.txt
 answers/temporary/*
-!answers/temporary/.keep
+!answers/temporary/.keep01-node-tutorial/answers/temp.txt
