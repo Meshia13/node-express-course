@@ -20,10 +20,10 @@ const getBody = (req, callback) => {
   });
 };
 
-
-// Generate a random number between 1 and 100
-let randomNum = Math.floor(Math.random() * 100) + 1;
-let message = "Guess a number between 1 and 100!";
+// Week2 edit: Changed the game from guessing between 1 and 100, to 1 and 50
+// Generate number between 1 and 50
+let randomNum = Math.floor(Math.random() * 50) + 1;
+let message = "Guess a number between 1 and 50!";
 
 const form = () => {
   return `
@@ -31,7 +31,7 @@ const form = () => {
       <h2>Guessing Game</h2>
       <p>${message}</p>
       <form method="POST">
-        <input type="number" min="1" max="100" name="guessNum" required></input>
+        <input type="number" min="1" max="50" name="guessNum" required></input>
         <button type="submit">Guess</button>
       </form>
     </body>`
@@ -61,7 +61,7 @@ const server = http.createServer((req, res) => {
         }
         else {
           message = `CONGRATULATION!!! ${guessNum} is the correct number!!! A new number is now generated.`
-          randomNum = Math.floor(Math.random() * 100) + 1; // Reset game
+          randomNum = Math.floor(Math.random() * 50) + 1; // Reset game
         }
       
       }
@@ -78,6 +78,10 @@ const server = http.createServer((req, res) => {
     res.end(form());
   }
 });
+
+server.on("request", (req) => {  
+  console.log("event received: ", req.method, req.url);  
+});  
 
 server.listen(3000);
 console.log("The server is listening on port 3000.");
